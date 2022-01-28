@@ -2308,7 +2308,9 @@ def make_HTTPS_handler(params, **kwargs):
     if sys.version_info < (3, 2):
         return YoutubeDLHTTPSHandler(params, **kwargs)
     else:  # Python < 3.4
-        context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
+        # OpenRefactory Warning: The 'ssl.SSLContext' method uses a weak SSL/TLS protocol.
+        # Protocol versions different from TLSv1.2 and TLSv1.3 are considered insecure.
+        context = ssl.SSLContext(protocol=ssl.PROTOCOL_TLSv1_2)
         context.verify_mode = (ssl.CERT_NONE
                                if opts_no_check_certificate
                                else ssl.CERT_REQUIRED)
