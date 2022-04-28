@@ -1,7 +1,7 @@
 # coding: utf-8
 from __future__ import unicode_literals
 
-import random
+import secrets
 
 from .common import InfoExtractor
 from ..utils import xpath_text
@@ -36,7 +36,7 @@ class MatchTVIE(InfoExtractor):
                 'sign': '',
                 'includeHighlights': '0',
                 'userId': '',
-                'sessionId': random.randint(1, 1000000000),
+                'sessionId': secrets.choice(range(1, 1000000001)),
                 'contentType': 'channel',
                 'timeShift': '0',
                 'platform': 'portal',
