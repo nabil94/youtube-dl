@@ -2294,9 +2294,13 @@ def formatSeconds(secs):
 def make_HTTPS_handler(params, **kwargs):
     opts_no_check_certificate = params.get('nocheckcertificate', False)
     if hasattr(ssl, 'create_default_context'):  # Python >= 3.4 or 2.7.9
+        # OpenRefactory Warning: The 'ssl.create_default_context' method doesn't validate server certificate.
+        # Certificate validation is essential to create secure SSL/TLS sessions not vulnerable to man-in-the-middle attacks.
+        # Server hostnames verification is disabled in 'context.check_hostname = False' statement.
+        # Server certificates validation is disabled in 'context.verify_mode = ssl.CERT_NONE' statement.
         context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
         if opts_no_check_certificate:
-            context.check_hostname = False
+            context.check_hostname = True
             context.verify_mode = ssl.CERT_NONE
         try:
             return YoutubeDLHTTPSHandler(params, context=context, **kwargs)
