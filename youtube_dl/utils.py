@@ -2149,6 +2149,51 @@ def sanitize_url(url):
         (r'^rmtp([es]?)://', r'rtmp\1://'),
     )
     for mistake, fixup in COMMON_TYPOS:
+        '''
+        ***************** OpenRefactory Warning *****************
+        Possible Regex injection!
+        Path:
+        	File: generic.py, Line: 3210
+        		url, smuggled_data = unsmuggle_url(url)
+        		Variable url, smuggled_data is assigned a tainted value.
+        	File: generic.py, Line: 3213
+        		force_videoid = None
+        		Variable force_videoid is assigned a tainted value.
+        	File: generic.py, Line: 3219
+        		force_videoid = smuggled_data['force_videoid']
+        		Variable force_videoid is assigned a tainted value.
+        	File: generic.py, Line: 3220
+        		video_id = force_videoid
+        		Variable video_id is assigned a tainted value.
+        	File: generic.py, Line: 3251
+        		full_response = None
+        		Variable full_response is assigned a tainted value.
+        	File: generic.py, Line: 3323
+        		first_bytes = full_response.read(512)
+        		Variable first_bytes is assigned a tainted value from an external source.
+        	File: generic.py, Line: 3361
+        		webpage = self._download_webpage(url, video_id)
+        		Tainted information is passed through a method call via url to the formal parameter url_or_request of the method.
+        	File: common.py, Line: 1579
+        		res = self._download_webpage_handle(
+        		                    url_or_request, video_id, note, errnote, fatal,
+        		                    encoding=encoding, data=data, headers=headers, query=query,
+        		                    expected_status=expected_status)
+        		Tainted information is passed through a method call via url_or_request to the formal parameter url_or_request of the method.
+        	File: common.py, Line: 1313
+        		urlh = self._request_webpage(url_or_request, video_id, note, errnote, fatal, data=data, headers=headers, query=query, expected_status=expected_status)
+        		Tainted information is passed through a method call via url_or_request to the formal parameter url_or_request of the method.
+        	File: common.py, Line: 1238
+        		url_or_request = sanitized_Request(url_or_request, data, headers)
+        		Tainted information is passed through a method call via url_or_request to the formal parameter url of the method.
+        	File: utils.py, Line: 2158
+        		return compat_urllib_request.Request(sanitize_url(url), *args, **kwargs)
+        		Tainted information is passed through a method call via url to the formal parameter url of the method.
+        	File: utils.py, Line: 2152
+        		if re.match(mistake, url):
+        		            return re.sub(mistake, fixup, url)
+        		Tainted information is used in a sink.
+        '''
         if re.match(mistake, url):
             return re.sub(mistake, fixup, url)
     return url
