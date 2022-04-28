@@ -17,6 +17,15 @@ def main():
         issue_template_tmpl = inf.read()
 
     # Get the version from youtube_dl/version.py without importing the package
+    '''
+    ***************** OpenRefactory Warning *****************
+    Possible Dynamic Code Execution!
+    Path:
+    	File: make_issue_template.py, Line: 20
+    		exec(compile(open('youtube_dl/version.py').read(),
+    		                 'youtube_dl/version.py', 'exec'))
+    		Tainted information is used in a sink.
+    '''
     exec(compile(open('youtube_dl/version.py').read(),
                  'youtube_dl/version.py', 'exec'))
 
