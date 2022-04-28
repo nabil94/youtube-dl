@@ -99,6 +99,8 @@ class ProSiebenSat1BaseIE(InfoExtractor):
                 return (bitrate // 1000) if bitrate % 1000 == 0 else bitrate
 
             for source_id in source_ids:
+                # OpenRefactory Warning: The 'sha1' method uses an unsecure hashing algorithms which is prone to collisions.
+                # Safer alternatives, such as SHA-256, SHA-512, SHA-3 are recommended.
                 client_id = self._SALT[:2] + sha1(''.join([self._SALT, clip_id, self._TOKEN, server_id, client_location, source_id, self._SALT, self._CLIENT_NAME]).encode('utf-8')).hexdigest()
                 urls = self._download_json(
                     'http://vas.sim-technik.de/vas/live/v2/videos/%s/sources/url' % clip_id,
