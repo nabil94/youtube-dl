@@ -645,11 +645,14 @@ class YoutubeDL(object):
                 autonumber_size = 5
             template_dict['autonumber'] = self.params.get('autonumber_start', 1) - 1 + self._num_downloads
             if template_dict.get('resolution') is None:
-                if template_dict.get('width') and template_dict.get('height'):
+                # Method call 'template_dict.get('width')' is extracted to variable 'result_var'
+                # to reduce multiple calls in the following test expression(s).
+                result_var = template_dict.get('width')
+                if result_var and template_dict.get('height'):
                     template_dict['resolution'] = '%dx%d' % (template_dict['width'], template_dict['height'])
                 elif template_dict.get('height'):
                     template_dict['resolution'] = '%sp' % template_dict['height']
-                elif template_dict.get('width'):
+                elif result_var:
                     template_dict['resolution'] = '%dx?' % template_dict['width']
 
             sanitize = lambda k, v: sanitize_filename(
