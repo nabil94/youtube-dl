@@ -1,8 +1,8 @@
 # coding: utf-8
 from __future__ import unicode_literals
 
-import random
 import re
+import secrets
 import time
 
 from .common import InfoExtractor
@@ -164,7 +164,7 @@ class BandcampIE(InfoExtractor):
                         # download_*_bundle_*.js
                         stat_url = update_url_query(
                             format_url.replace('/download/', '/statdownload/'), {
-                                '.rand': int(time.time() * 1000 * random.random()),
+                                '.rand': int(time.time() * 1000 * secrets.SystemRandom().random()),
                             })
                         format_id = f.get('encoding_name') or format_id
                         stat = self._download_json(
