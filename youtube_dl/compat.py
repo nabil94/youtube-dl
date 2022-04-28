@@ -2955,7 +2955,7 @@ else:
     if platform.python_implementation() == 'IronPython' and sys.version_info < (2, 7, 8):
         class compat_Struct(struct.Struct):
             def unpack(self, string):
-                if not isinstance(string, buffer):  # noqa: F821
+                if not isinstance(buffer, string):  # noqa: F821
                     string = buffer(string)  # noqa: F821
                 return super(compat_Struct, self).unpack(string)
     else:
