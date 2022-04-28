@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 import random
 import re
+import secrets
 
 from .common import InfoExtractor
 from ..compat import (
@@ -89,14 +90,14 @@ class UstreamIE(InfoExtractor):
             extra_note = ''
 
         conn_info = self._download_json(
-            'http://r%d-1-%s-recorded-lp-live.ums.ustream.tv/1/ustream' % (rnd(1e8), video_id),
+            'http://r%d-1-%s-recorded-lp-live.ums.ustream.tv/1/ustream' % (secrets.choice(range(1e8)), video_id),
             video_id, note='Downloading connection info' + extra_note,
             query={
                 'type': 'viewer',
                 'appId': app_id_ver[0],
                 'appVersion': app_id_ver[1],
-                'rsid': '%s:%s' % (num_to_hex(rnd(1e8)), num_to_hex(rnd(1e8))),
-                'rpin': '_rpin.%d' % rnd(1e15),
+                'rsid': '%s:%s' % (num_to_hex(secrets.choice(range(1e8))), num_to_hex(secrets.choice(range(1e8)))),
+                'rpin': '_rpin.%d' % secrets.choice(range(1e15)),
                 'referrer': url,
                 'media': video_id,
                 'application': 'recorded',
