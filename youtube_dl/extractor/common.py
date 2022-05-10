@@ -730,6 +730,8 @@ class InfoExtractor(object):
         if self._downloader.params.get('write_pages', False):
             basen = '%s_%s' % (video_id, urlh.geturl())
             if len(basen) > 240:
+                # OpenRefactory Warning: The 'hashlib.md5' method uses an unsecure hashing algorithms which is prone to collisions.
+                # Safer alternatives, such as SHA-256, SHA-512, SHA-3 are recommended.
                 h = '___' + hashlib.md5(basen.encode('utf-8')).hexdigest()
                 basen = basen[:240 - len(h)] + h
             raw_filename = basen + '.dump'
